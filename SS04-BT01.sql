@@ -66,7 +66,18 @@ from Student S join Mark M on S.StudentID = M.StudentID join `Subject` Sub on M.
 where sub.subname = 'CF';
 -- SS04-BT01
 -- Hiển thị tất cả các thông tin môn học (bảng subject) có credit lớn nhất
-
--- Hiển thị các thông tin môn học có điểm thi lớn nhấtable
-
+SELECT *
+FROM Subject
+WHERE Credit = (SELECT MAX(Credit) FROM Subject);
+-- Xử lý thông tin bài tập
+-- Hiển thị các thông tin môn học có điểm thi lớn nhất
+SELECT Sub.SubID, Sub.SubName, MAX(M.Mark) AS MaxMark
+FROM Subject Sub
+JOIN Mark M ON Sub.SubID = M.SubID
+GROUP BY Sub.SubID, Sub.SubName;
 -- Hiển thị các thông tin sinh viên và điểm trung bình của mỗi sinh viên, xếp hạng theo thứ tự điểm giảm dần
+SELECT S.StudentID, S.StudentName, AVG(M.Mark) AS AvgMark
+FROM Student S
+JOIN Mark M ON S.StudentID = M.StudentID
+GROUP BY S.StudentID, S.StudentName
+ORDER BY AvgMark DESC;
